@@ -1,0 +1,10 @@
+{
+  "extends": ["plugin:@typescript-eslint/recommended", "airbnb"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
+    }
+  }
+}

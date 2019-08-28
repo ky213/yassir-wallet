@@ -1,11 +1,11 @@
 {
   "swagger": {
-    "outputDirectory": "./dist",
+    "outputDirectory": ".",
     "entryFile": "./src/app.ts"
   },
   "routes": {
     "basePath": "/",
     "entryFile": "./src/app.ts",
-    "routesDir": "./dist"
+    "routesDir": "."
   }
 }
