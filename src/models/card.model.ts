@@ -3,18 +3,18 @@ import { User } from './user.model';
 
 @Entity()
 export class Card {
-  @PrimaryColumn({ type: 'numeric', nullable: false })
+  @PrimaryColumn({ type: 'bigint', nullable: false })
   number!: number;
 
   @Column({ type: 'varchar', nullable: false })
   name!: string;
 
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'integer', nullable: false })
   exp!: number;
 
   @Column({ type: 'integer', nullable: false })
   cvv!: number;
 
-  @ManyToOne(type => User, user => user.cards)
-  user!: User;
+  // @ManyToOne(type => User, user => user.cards)
+  // user!: User;
 }
