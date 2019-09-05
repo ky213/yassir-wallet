@@ -6,38 +6,35 @@ import {
   Put,
   Delete,
   BodyProp,
-  Response,
   Tags
-} from 'tsoa';
-import { User } from '../models/user.model';
-import UserService from '../services/user.service';
+} from "tsoa";
+import User from "../models/user.model";
+import UserService from "../services/user.service";
 
-export interface IUserRequest {
-  [key: string]: any;
+export interface UserRequest {
+  [key: string]: object;
 }
 
-@Route('/user')
-@Tags('User')
-export class UserController extends Controller {
-  @Get('/{id}')
-  async getUser(id: string): Promise<User | undefined> {
-    return await UserService.getUser(id);
+@Route("/user")
+@Tags("User")
+export default class UserController extends Controller {
+  @Get("/{id}")
+  getUser(id: string): Promise<User | undefined> {
+    return UserService.getUser(id);
   }
 
   @Post()
-  async createUser(@BodyProp() user: User): Promise<void> {
-    console.log(user);
-
+  createUser(@BodyProp() user: User): Promise<void> {
     return UserService.createUser(user);
   }
 
-  @Put('/{id}')
-  async updateUser(id: string, @BodyProp() info: IUserRequest): Promise<void> {
-    return await UserService.updateUser(id, info);
+  @Put("/{id}")
+  updateUser(id: string, @BodyProp() info: UserRequest): Promise<void> {
+    return UserService.updateUser(id, info);
   }
 
-  @Delete('/{id}')
-  async deleteUser(id: string): Promise<void> {
-    return await UserService.deleteUser(id);
+  @Delete("/{id}")
+  deleteUser(id: string): Promise<void> {
+    return UserService.deleteUser(id);
   }
 }

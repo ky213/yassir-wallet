@@ -1,15 +1,15 @@
-import { Router, Request, Response } from 'express';
-import { CardController } from '../controllers/card.controller';
-import { QueryFailedError } from 'typeorm';
+import { Router, Request, Response } from "express";
+import { QueryFailedError } from "typeorm";
+import CardController from "../controllers/card.controller";
 
 const card: Router = Router();
 const cardController = new CardController();
 
-card.get('/:number', (req: Request, res: Response, next: Function) => {
+card.get("/:number", (req: Request, res: Response, next: Function) => {
   cardController
     .getCard(+req.params.number)
-    .then(card => {
-      res.send(card);
+    .then(result => {
+      res.send(result);
     })
     .catch((error: QueryFailedError) => {
       res.statusCode = 400;
@@ -17,7 +17,7 @@ card.get('/:number', (req: Request, res: Response, next: Function) => {
     });
 });
 
-card.post('/', (req: Request, res: Response, next: Function) => {
+card.post("/", (req: Request, res: Response, next: Function) => {
   cardController
     .createCard(req.body)
     .then(() => {
@@ -29,7 +29,7 @@ card.post('/', (req: Request, res: Response, next: Function) => {
     });
 });
 
-card.put('/:number', (req: Request, res: Response, next: Function) => {
+card.put("/:number", (req: Request, res: Response, next: Function) => {
   cardController
     .updateCard(+req.params.number, req.body)
     .then(() => {
@@ -41,7 +41,7 @@ card.put('/:number', (req: Request, res: Response, next: Function) => {
     });
 });
 
-card.delete('/:id', (req: Request, res: Response, next: Function) => {
+card.delete("/:id", (req: Request, res: Response, next: Function) => {
   cardController
     .deleteCard(+req.params.id)
     .then(() => {

@@ -1,9 +1,9 @@
 import { getConnection } from 'typeorm';
-import { User } from '../models/user.model';
+import User from '../models/user.model';
 
 export default class UserService {
-  static async createUser(user: User): Promise<any> {
-    return await getConnection()
+  static createUser(user: User): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .insert()
       .into(User)
@@ -11,8 +11,8 @@ export default class UserService {
       .execute();
   }
 
-  static async getUser(id: string): Promise<User | undefined> {
-    return await getConnection()
+  static getUser(id: string): Promise<User | undefined> {
+    return getConnection()
       .createQueryBuilder()
       .select('user')
       .from(User, 'user')
@@ -20,8 +20,8 @@ export default class UserService {
       .getOne();
   }
 
-  static async updateUser(id: string, info: object): Promise<any> {
-    return await getConnection()
+  static updateUser(id: string, info: object): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .update(User)
       .set(info)
@@ -29,8 +29,8 @@ export default class UserService {
       .execute();
   }
 
-  static async deleteUser(id: string): Promise<any> {
-    return await getConnection()
+  static deleteUser(id: string): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .delete()
       .from(User)

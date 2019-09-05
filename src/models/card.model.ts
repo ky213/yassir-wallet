@@ -1,18 +1,17 @@
-import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
-import { User } from './user.model';
+import { Entity, Column, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Card {
-  @PrimaryColumn({ type: 'bigint', nullable: false })
+export default class Card {
+  @PrimaryColumn({ type: "bigint", nullable: false })
   number!: number;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: "varchar", nullable: false })
   name!: string;
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ type: "integer", nullable: false })
   exp!: number;
 
-  @Column({ type: 'integer', nullable: false })
+  @Column({ type: "integer", nullable: false })
   cvv!: number;
 
   // @ManyToOne(type => User, user => user.cards)

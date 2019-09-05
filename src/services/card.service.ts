@@ -1,9 +1,9 @@
-import { getConnection } from 'typeorm';
-import { Card } from '../models/card.model';
+import { getConnection } from "typeorm";
+import Card from "../models/card.model";
 
 export default class CardService {
-  static async createCard(card: Card): Promise<any> {
-    return await getConnection()
+  static createCard(card: Card): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .insert()
       .into(Card)
@@ -11,30 +11,30 @@ export default class CardService {
       .execute();
   }
 
-  static async getCard(number: number): Promise<Card | undefined> {
-    return await getConnection()
+  static getCard(number: number): Promise<Card | undefined> {
+    return getConnection()
       .createQueryBuilder()
-      .select('card')
-      .from(Card, 'card')
-      .where('card.number = :number', { number })
+      .select("card")
+      .from(Card, "card")
+      .where("card.number = :number", { number })
       .getOne();
   }
 
-  static async updateCard(number: number, info: any): Promise<any> {
-    return await getConnection()
+  static updateCard(number: number, info: any): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .update(Card)
       .set({ ...info })
-      .where('number = :number', { number })
+      .where("number = :number", { number })
       .execute();
   }
 
-  static async deleteCard(number: number): Promise<any> {
-    return await getConnection()
+  static deleteCard(number: number): Promise<any> {
+    return getConnection()
       .createQueryBuilder()
       .delete()
       .from(Card)
-      .where('number = :number', { number })
+      .where("number = :number", { number })
       .execute();
   }
 }

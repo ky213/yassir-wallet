@@ -1,21 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Card } from './card.model';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
+export default class User {
+  @PrimaryGeneratedColumn("uuid")
   id!: number;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: "varchar", nullable: false })
   firstName!: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: "varchar", nullable: false })
   lastName!: string;
 
-  @Column({ type: 'bigint', nullable: false })
+  @Column({ type: "bigint", nullable: false })
   phone!: number;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: "varchar", nullable: false })
   email!: string;
 
   // @Column({ type: 'int', nullable: false })

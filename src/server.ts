@@ -1,8 +1,8 @@
 import { app } from './app';
-import { connectDB } from './config/databse';
+import connectDB from './config/databse';
 
 connectDB()
-  .then(connection => {
+  .then(() => {
     console.log('Connected To Database');
   })
   .catch(err => {
