@@ -1,25 +1,24 @@
-import { Request, Response } from "express";
-import express = require("express");
-import bodyParser from "body-parser";
-import { UserController } from "./controllers/user.controller";
-import { User } from "./models/user.model";
-import SwaggerUI from "swagger-ui-express";
-import "./controllers/user.controller";
-import { RegisterRoutes } from "../dist/routes";
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import SwaggerUI from 'swagger-ui-express';
+import { RegisterRoutes } from '../routes';
+import swaggerDoc from '../swagger.json';
+import UserRouter from './routes/user.routes';
+import CardRouter from './routes/card.routes';
+
+import './controllers/user.controller';
+import './controllers/card.controller';
 
 const app = express();
-const swaggerDoc = require("../dist/swagger.json");
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use("/docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDoc));
+app.use('/docs', SwaggerUI.serve, SwaggerUI.setup(swaggerDoc));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World \n");
-});
+app.use('/user', UserRouter);
+app.use('/card', CardRouter);
 
-app.get("/users/:id", async (req: Request, res: Response) => {
-  res.send("get user");
+app.use((error: Error, req: Request, res: Response, next: Function) => {
+  res.send(error);
 });
 
 RegisterRoutes(app);

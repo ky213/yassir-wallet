@@ -1,3 +1,5 @@
 node_modules
 dist
 env.prod.json
+routes.ts
+swagger.json

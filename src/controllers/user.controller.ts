@@ -1,18 +1,40 @@
-import { Get, Post, Route, Controller, Put, Delete, BodyProp } from "tsoa";
+import {
+  Get,
+  Post,
+  Route,
+  Controller,
+  Put,
+  Delete,
+  BodyProp,
+  Tags
+} from "tsoa";
+import User from "../models/user.model";
 import UserService from "../services/user.service";
-import { User, UserCreationRequest } from "../models/user.model";
 
-@Route("users")
-export class UserController extends Controller {
-  @Get()
-  public async getAll(): Promise<void> {}
+export interface UserRequest {
+  [key: string]: object;
+}
+
+@Route("/user")
+@Tags("User")
+export default class UserController extends Controller {
+  @Get("/{id}")
+  getUser(id: string): Promise<User | undefined> {
+    return UserService.getUser(id);
+  }
 
   @Post()
-  public async create(@BodyProp() user: string): Promise<void> {}
+  createUser(@BodyProp() user: User): Promise<void> {
+    return UserService.createUser(user);
+  }
 
   @Put("/{id}")
-  public async update(id: string, @BodyProp() user: string): Promise<void> {}
+  updateUser(id: string, @BodyProp() info: UserRequest): Promise<void> {
+    return UserService.updateUser(id, info);
+  }
 
   @Delete("/{id}")
-  public async remove(id: string): Promise<void> {}
+  deleteUser(id: string): Promise<void> {
+    return UserService.deleteUser(id);
+  }
 }

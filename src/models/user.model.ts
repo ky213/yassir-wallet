@@ -1,20 +1,28 @@
-export interface User {
-    id: number;
-    email: string;
-    name: Name;
-    status?: status;
-    phoneNumbers: string[];
-}
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-export type status = 'Happy' | 'Sad';
+@Entity()
+export default class User {
+  @PrimaryGeneratedColumn("uuid")
+  id!: number;
 
-export interface Name {
-    first: string;
-    last?: string;
-}
+  @Column({ type: "varchar", nullable: false })
+  firstName!: string;
 
-export interface UserCreationRequest {
-    email: string;
-    name: Name;
-    phoneNumbers: string[];
+  @Column({ type: "varchar", nullable: false })
+  lastName!: string;
+
+  @Column({ type: "bigint", nullable: false })
+  phone!: number;
+
+  @Column({ type: "varchar", nullable: false })
+  email!: string;
+
+  // @Column({ type: 'int', nullable: false })
+  // age!: number;
+
+  // @Column({ type: 'varchar', nullable: false })
+  // address!: number;
+
+  // @OneToMany(type => Card, card => card.user)
+  // cards!: Card[];
 }

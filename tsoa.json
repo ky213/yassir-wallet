@@ -1,11 +1,39 @@
 {
   "swagger": {
-    "outputDirectory": "./dist",
-    "entryFile": "./src/app.ts"
+    "outputDirectory": ".",
+    "entryFile": "./src/app.ts",
+    "host": "localhost:5000",
+    "basePath": "/",
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "access_token",
+        "in": "query"
+      },
+      "tsoa_auth": {
+        "type": "oauth2",
+        "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+        "flow": "implicit",
+        "scopes": {
+          "write:pets": "modify things",
+          "read:pets": "read things"
+        }
+      }
+    },
+    "tags": [
+      {
+        "name": "User",
+        "description": "Operations about users"
+      },
+      {
+        "name": "Card",
+        "description": "Operations about cards"
+      }
+    ]
   },
   "routes": {
     "basePath": "/",
     "entryFile": "./src/app.ts",
-    "routesDir": "./dist"
+    "routesDir": "."
   }
 }
