@@ -22,12 +22,16 @@
     },
     "tags": [
       {
-        "name": "User",
-        "description": "Operations about users"
+        "name": "Account",
+        "description": "Operations about Accounts"
       },
       {
-        "name": "Card",
-        "description": "Operations about cards"
+        "name": "Balance",
+        "description": "Operations about Balances"
+      },
+      {
+        "name": "Cuurency",
+        "description": "Operations about Currencies"
       }
     ]
   },
