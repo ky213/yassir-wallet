@@ -3,3 +3,5 @@ dist
 env.prod.json
 routes.ts
 swagger.json
+*.log
+TODO

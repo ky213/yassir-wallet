@@ -9,36 +9,38 @@ import {
   Tags
 } from 'tsoa';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
-import Currency from '../models/currency.model';
+import Currency, { CreateCurrency } from '../models/currency.model';
 import CurrencyService from '../services/currency.service';
 
-export interface CurrencyRequest {
-  [key: string]: object;
-}
+const currency = new CurrencyService();
 
 @Route('/currency')
 @Tags('Currency')
 export default class CurrencyController extends Controller {
+  @Get('/all')
+  getAllCurrencies(): Promise<Currency[]> {
+    return currency.getAllCurrencies();
+  }
+
   @Get('/{id}')
-  static getCurrency(id: string): Promise<Currency | undefined> {
-    return CurrencyService.getCurrency(id);
+  getCurrency(id: string): Promise<Currency> {
+    return currency.getCurrency(id);
   }
 
   @Post()
-  static createCurrency(@BodyProp() currency: Currency): Promise<InsertResult> {
-    return CurrencyService.createCurrency(currency);
+  createCurrency(
+    @BodyProp() newCurrency: CreateCurrency
+  ): Promise<InsertResult> {
+    return currency.createCurrency(newCurrency);
   }
 
   @Put('/{id}')
-  static updateCurrency(
-    id: string,
-    @BodyProp() info: CurrencyRequest
-  ): Promise<UpdateResult> {
-    return CurrencyService.updateCurrency(id, info);
+  updateCurrency(id: string, @BodyProp() info: object): Promise<UpdateResult> {
+    return currency.updateCurrency(id, info);
   }
 
   @Delete('/{id}')
-  static deleteCurrency(id: string): Promise<DeleteResult> {
-    return CurrencyService.deleteCurrency(id);
+  deleteCurrency(id: string): Promise<DeleteResult> {
+    return currency.deleteCurrency(id);
   }
 }

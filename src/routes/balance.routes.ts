@@ -1,49 +1,32 @@
 import { Router, Request, Response } from 'express';
 import BalanceController from '../controllers/balance.controller';
 
+const balanceController = new BalanceController();
 const Balance: Router = Router();
 
-Balance.get('/:id', async (req: Request, res: Response, next: Function) => {
-  try {
-    const balance = await BalanceController.getBalance(req.params.id);
-    res.send(balance);
-  } catch (error) {
-    res.statusCode = 400;
-    next(error);
-  }
+Balance.get('/all', async (req: Request, res: Response) => {
+  const balance = await balanceController.getAllBalances();
+  res.send(balance);
 });
 
-Balance.post('/', async (req: Request, res: Response, next: Function) => {
-  try {
-    const balance = await BalanceController.createBalance(req.body);
-    res.send(balance);
-  } catch (error) {
-    res.statusCode = 400;
-    next(error);
-  }
+Balance.get('/:id', async (req: Request, res: Response) => {
+  const balance = await balanceController.getBalance(req.params.id);
+  res.send(balance);
 });
 
-Balance.put('/:id', async (req: Request, res: Response, next: Function) => {
-  try {
-    const balance = await BalanceController.updateBalance(
-      req.params.id,
-      req.body
-    );
-    res.send(balance);
-  } catch (error) {
-    res.statusCode = 400;
-    next(error);
-  }
+Balance.post('/', async (req: Request, res: Response) => {
+  const balance = await balanceController.createBalance(req.body);
+  res.send(balance);
 });
 
-Balance.delete('/:id', async (req: Request, res: Response, next: Function) => {
-  try {
-    const deleteResult = await BalanceController.deleteBalance(req.params.id);
-    res.send(deleteResult);
-  } catch (error) {
-    res.statusCode = 400;
-    next(error);
-  }
+Balance.put('/', async (req: Request, res: Response) => {
+  const balance = await balanceController.updateBalance(req.body);
+  res.send(balance);
+});
+
+Balance.delete('/:id', async (req: Request, res: Response) => {
+  const deleteResult = await balanceController.deleteBalance(req.params.id);
+  res.send(deleteResult);
 });
 
 export default Balance;

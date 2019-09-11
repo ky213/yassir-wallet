@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "strict": true,
+    "strict": false,
     "sourceMap": true,
     "resolveJsonModule": true
   }

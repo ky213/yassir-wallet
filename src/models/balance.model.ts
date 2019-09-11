@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import {
   Entity,
   Column,
@@ -7,10 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToOne,
-  JoinTable,
   BaseEntity
 } from 'typeorm';
+import { IsNumber, IsNotEmpty } from 'class-validator';
 import Account from './account.model';
 import Currency from './currency.model';
 
@@ -20,6 +17,8 @@ export default class Balance extends BaseEntity {
   id!: string;
 
   @Column({ type: 'numeric', nullable: false, default: 0 })
+  @IsNotEmpty()
+  @IsNumber()
   ammount!: number;
 
   @CreateDateColumn()
@@ -28,10 +27,23 @@ export default class Balance extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @ManyToOne(type => Account, account => account.id)
+  @ManyToOne(() => Account, account => account.balances)
   account!: Account;
 
-  @OneToOne(type => Currency, currency => currency.id)
-  @JoinTable()
+  @ManyToOne(() => Currency, currency => currency.balances)
   currency!: Currency;
 }
+
+export interface CreateBalance {
+  ammount: number;
+  currency: { id: string };
+  account: { id: string };
+}
+
+export interface UpdateBalance {
+  id: string;
+  operation: operation;
+  amount: number;
+}
+
+export type operation = 'Increment' | 'Decrement';

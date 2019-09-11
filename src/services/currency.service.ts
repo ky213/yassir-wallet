@@ -1,20 +1,24 @@
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
-import Currency from '../models/currency.model';
+import Currency, { CreateCurrency } from '../models/currency.model';
 
 export default class CurrencyService {
-  static createCurrency(currency: Currency): Promise<InsertResult> {
+  createCurrency(currency: CreateCurrency): Promise<InsertResult> {
     return Currency.insert(currency);
   }
 
-  static getCurrency(id: string): Promise<Currency | undefined> {
+  getAllCurrencies(): Promise<Currency[]> {
+    return Currency.find();
+  }
+
+  getCurrency(id: string | undefined): Promise<Currency> {
     return Currency.findOne(id);
   }
 
-  static updateCurrency(id: string, info: object): Promise<UpdateResult> {
+  updateCurrency(id: string, info: object): Promise<UpdateResult> {
     return Currency.update(id, info);
   }
 
-  static deleteCurrency(id: string): Promise<DeleteResult> {
+  deleteCurrency(id: string): Promise<DeleteResult> {
     return Currency.delete(id);
   }
 }

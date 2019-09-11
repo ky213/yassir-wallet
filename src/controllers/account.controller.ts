@@ -11,34 +11,51 @@ import {
 import { InsertResult, DeleteResult, UpdateResult } from 'typeorm';
 import Account from '../models/account.model';
 import AccountService from '../services/account.service';
+import Balance from '../models/balance.model';
 
 export interface AccountRequest {
   [key: string]: object;
 }
 
+const account = new AccountService();
+
 @Route('/account')
 @Tags('Account')
 export default class AccountController extends Controller {
+  @Get('/all')
+  getAllAccounts(): Promise<Account[]> {
+    return account.getAllAccounts();
+  }
+
   @Get('/{id}')
-  static getAccount(id: string): Promise<Account | undefined> {
-    return AccountService.getAccount(id);
+  getAccount(id: string): Promise<Account | undefined> {
+    return account.getAccount(id);
+  }
+
+  @Get('/{id}/balances')
+  getAccountBalances(id: string): Promise<Balance[]> {
+    return account.getAccountBalances(id);
   }
 
   @Post()
-  static createAccount(@BodyProp() account: Account): Promise<InsertResult> {
-    return AccountService.createAccount(account);
+  createAccount(@BodyProp() newAccount: CreateAccount): Promise<InsertResult> {
+    return account.createAccount(newAccount);
   }
 
   @Put('/{id}')
-  static updateAccount(
+  updateAccount(
     id: string,
     @BodyProp() info: AccountRequest
   ): Promise<UpdateResult> {
-    return AccountService.updateAccount(id, info);
+    return account.updateAccount(id, info);
   }
 
   @Delete('/{id}')
-  static deleteAccount(id: string): Promise<DeleteResult> {
-    return AccountService.deleteAccount(id);
+  deleteAccount(id: string): Promise<DeleteResult> {
+    return account.deleteAccount(id);
   }
+}
+
+export interface CreateAccount {
+  userId: string;
 }

@@ -2,7 +2,7 @@
   "swagger": {
     "outputDirectory": ".",
     "entryFile": "./src/app.ts",
-    "host": "localhost:5000",
+    "host": "localhost:5500",
     "basePath": "/",
     "securityDefinitions": {
       "api_key": {

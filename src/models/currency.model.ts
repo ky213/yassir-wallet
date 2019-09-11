@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  JoinTable,
-  BaseEntity
+  BaseEntity,
+  OneToMany
 } from 'typeorm';
+import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
 import Balance from './balance.model';
 
 @Entity()
@@ -18,13 +16,26 @@ export default class Currency extends BaseEntity {
   id!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
-  countryName!: string;
+  @IsNotEmpty()
+  @IsString()
+  label!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
-  currencyLabel!: string;
+  @IsNotEmpty()
+  @IsString()
+  country!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
-  currencyCode!: string;
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(3)
+  code!: string;
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(2)
+  symbol!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
@@ -32,7 +43,13 @@ export default class Currency extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToOne(type => Balance, balance => balance.id)
-  @JoinTable()
-  balance!: Balance;
+  @OneToMany(() => Balance, balance => balance.currency)
+  balances!: Balance[];
+}
+
+export interface CreateCurrency {
+  label: string;
+  country: string;
+  code: string;
+  symbol: string;
 }

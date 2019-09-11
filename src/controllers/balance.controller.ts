@@ -8,38 +8,39 @@ import {
   BodyProp,
   Tags
 } from 'tsoa';
-import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
-import Balance from '../models/balance.model';
+import { DeleteResult, InsertResult } from 'typeorm';
+import Balance, { UpdateBalance } from '../models/balance.model';
 import BalanceService from '../services/balance.service';
 
-export interface BalanceUpdateRequest {
-  id: string;
-  amount: number;
-}
+const balance = new BalanceService();
 
 @Route('/balance')
 @Tags('Balance')
 export default class BalanceController extends Controller {
+  @Get('/all')
+  getAllBalances(): Promise<Balance[]> {
+    return balance.getAllBalances();
+  }
+
   @Get('/{id}')
-  static getBalance(id: string): Promise<Balance | undefined> {
-    return BalanceService.getBalance(id);
+  getBalance(id: string): Promise<Balance | Balance[]> {
+    return balance.getBalance(id);
   }
 
   @Post()
-  static createBalance(@BodyProp() balance: Balance): Promise<InsertResult> {
-    return BalanceService.createBalance(balance);
+  createBalance(@BodyProp() newBalance: Balance): Promise<InsertResult> {
+    return balance.createBalance(newBalance);
   }
 
-  @Put('/{id}')
-  static updateBalance(
-    id: string,
-    @BodyProp() info: BalanceUpdateRequest
-  ): Promise<UpdateResult> {
-    return BalanceService.updateBalance(id, info);
+  @Put()
+  updateBalance(
+    @BodyProp() newBalance: UpdateBalance
+  ): Promise<Balance | string> {
+    return balance.updateBalance(newBalance);
   }
 
   @Delete('/{id}')
-  static deleteBalance(id: string): Promise<DeleteResult> {
-    return BalanceService.deleteBalance(id);
+  deleteBalance(id: string): Promise<DeleteResult> {
+    return balance.deleteBalance(id);
   }
 }
