@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import CurrencyController from '../controllers/currency.controller';
-import { checkNewCurrencyData } from '../helpers/validators/currency.validators';
+import { checkNewCurrencyData } from '../middlewares/validators/currency.validators';
 
 const currencyController = new CurrencyController();
 const Currency: Router = Router();

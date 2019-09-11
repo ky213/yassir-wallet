@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import AccountController from '../controllers/account.controller';
-import { checkNewAccountData } from '../helpers/validators/account.validators';
+import { checkNewAccountData } from '../middlewares/validators/account.validators';
 
 const accountController = new AccountController();
 const Account = Router();
