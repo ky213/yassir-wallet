@@ -30,8 +30,12 @@
         "description": "Operations about Balances"
       },
       {
-        "name": "Cuurency",
-        "description": "Operations about Currencies"
+        "name": "Country",
+        "description": "Operations about Countries"
+      },
+      {
+        "name": "Payment Methods",
+        "description": "Operations about payment methods"
       }
     ]
   },

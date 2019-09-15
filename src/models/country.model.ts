@@ -5,25 +5,27 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  ManyToMany,
   OneToMany
 } from 'typeorm';
 import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
+import PaymentMethod from './paymentMethod.model';
 import Balance from './balance.model';
 
 @Entity()
-export default class Currency extends BaseEntity {
+export default class Country extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
   @IsString()
-  label!: string;
+  name!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
   @IsString()
-  country!: string;
+  currency!: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
@@ -43,13 +45,23 @@ export default class Currency extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany(() => Balance, balance => balance.currency)
+  @OneToMany(() => Balance, balance => balance.country)
   balances!: Balance[];
+
+  @ManyToMany(() => PaymentMethod, paymentMethod => paymentMethod.countries)
+  paymentMethods!: PaymentMethod[];
 }
 
-export interface CreateCurrency {
+export interface CreateCountry {
   label: string;
   country: string;
   code: string;
   symbol: string;
+}
+
+export interface UpdateCountry {
+  label?: string;
+  country?: string;
+  code?: string;
+  symbol?: string;
 }

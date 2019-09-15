@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import BalanceController from '../controllers/balance.controller';
+import { checkNewData } from '../middlewares/validators/data.validator';
 
 const balanceController = new BalanceController();
 const Balance: Router = Router();
@@ -14,13 +15,16 @@ Balance.get('/:id', async (req: Request, res: Response) => {
   res.send(balance);
 });
 
-Balance.post('/', async (req: Request, res: Response) => {
+Balance.post('/', checkNewData, async (req: Request, res: Response) => {
   const balance = await balanceController.createBalance(req.body);
   res.send(balance);
 });
 
-Balance.put('/', async (req: Request, res: Response) => {
-  const balance = await balanceController.updateBalance(req.body);
+Balance.put('/:id', checkNewData, async (req: Request, res: Response) => {
+  const balance = await balanceController.updateBalance(
+    req.params.id,
+    req.body
+  );
   res.send(balance);
 });
 

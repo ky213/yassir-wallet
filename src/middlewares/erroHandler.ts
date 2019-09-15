@@ -3,12 +3,19 @@
 import { Request, Response, NextFunction } from 'express';
 import logger from '../utils/logger';
 
+export interface CustomError {
+  status: number;
+  source: string;
+  type: string;
+  content: any;
+}
+
 export default (
-  err: Error,
+  err: CustomError,
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
-  logger.error(err.message, err);
-  res.status(500).send('Something failed !!');
+  logger.log('error', '', err);
+  res.status(400).send(err);
 };

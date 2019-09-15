@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import AccountController from '../controllers/account.controller';
-import { checkNewAccountData } from '../middlewares/validators/account.validators';
+import { checkNewData } from '../middlewares/validators/data.validator';
 
 const accountController = new AccountController();
 const Account = Router();
@@ -14,17 +14,25 @@ Account.get('/:id', async (req: Request, res: Response) => {
   const account = await accountController.getAccount(req.params.id);
   res.send(account);
 });
+
 Account.get('/:id/balances', async (req: Request, res: Response) => {
-  const account = await accountController.getAccountBalances(req.params.id);
-  res.send(account);
+  const balances = await accountController.getBalances(req.params.id);
+  res.send(balances);
 });
 
-Account.post('/', checkNewAccountData, async (req: Request, res: Response) => {
-  const account = await accountController.createAccount(req.body);
-  res.send(account);
+Account.get('/:id/paymentMethods', async (req: Request, res: Response) => {
+  const paymentMethods = await accountController.getPaymentMethods(
+    req.params.id
+  );
+  res.send(paymentMethods);
 });
 
-Account.put('/:id', async (req: Request, res: Response) => {
+Account.post('/', checkNewData, async (req: Request, res: Response) => {
+  const newAccount = await accountController.createAccount(req.body);
+  res.send(newAccount);
+});
+
+Account.put('/:id', checkNewData, async (req: Request, res: Response) => {
   const updateResult = await accountController.updateAccount(
     req.params.id,
     req.body

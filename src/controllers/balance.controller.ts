@@ -9,7 +9,7 @@ import {
   Tags
 } from 'tsoa';
 import { DeleteResult, InsertResult } from 'typeorm';
-import Balance, { UpdateBalance } from '../models/balance.model';
+import Balance, { UpdateBalance, CreateBalance } from '../models/balance.model';
 import BalanceService from '../services/balance.service';
 
 const balance = new BalanceService();
@@ -28,15 +28,16 @@ export default class BalanceController extends Controller {
   }
 
   @Post()
-  createBalance(@BodyProp() newBalance: Balance): Promise<InsertResult> {
+  createBalance(@BodyProp() newBalance: CreateBalance): Promise<InsertResult> {
     return balance.createBalance(newBalance);
   }
 
   @Put()
   updateBalance(
-    @BodyProp() newBalance: UpdateBalance
+    @BodyProp() id: string,
+    data: UpdateBalance
   ): Promise<Balance | string> {
-    return balance.updateBalance(newBalance);
+    return balance.updateBalance(id, data);
   }
 
   @Delete('/{id}')

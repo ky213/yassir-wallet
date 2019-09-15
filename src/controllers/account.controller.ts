@@ -9,13 +9,10 @@ import {
   Tags
 } from 'tsoa';
 import { InsertResult, DeleteResult, UpdateResult } from 'typeorm';
-import Account from '../models/account.model';
+import Account, { CreateAccount, UpdateAccount } from '../models/account.model';
 import AccountService from '../services/account.service';
 import Balance from '../models/balance.model';
-
-export interface AccountRequest {
-  [key: string]: object;
-}
+import PaymentMethod from '../models/paymentMethod.model';
 
 const account = new AccountService();
 
@@ -33,29 +30,30 @@ export default class AccountController extends Controller {
   }
 
   @Get('/{id}/balances')
-  getAccountBalances(id: string): Promise<Balance[]> {
-    return account.getAccountBalances(id);
+  getBalances(id: string): Promise<Balance[]> {
+    return account.getBalances(id);
+  }
+
+  @Get('/{id}/paymentMethods')
+  getPaymentMethods(id: string): Promise<PaymentMethod[]> {
+    return account.getPaymentMethods(id);
   }
 
   @Post()
   createAccount(@BodyProp() newAccount: CreateAccount): Promise<InsertResult> {
-    return account.createAccount(newAccount);
+    return AccountService.createAccount(newAccount);
   }
 
   @Put('/{id}')
   updateAccount(
     id: string,
-    @BodyProp() info: AccountRequest
+    @BodyProp() data: UpdateAccount
   ): Promise<UpdateResult> {
-    return account.updateAccount(id, info);
+    return account.updateAccount(id, data);
   }
 
   @Delete('/{id}')
   deleteAccount(id: string): Promise<DeleteResult> {
     return account.deleteAccount(id);
   }
-}
-
-export interface CreateAccount {
-  userId: string;
 }

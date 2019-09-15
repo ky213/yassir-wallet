@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { IsUUID, IsNotEmpty } from 'class-validator';
 import Balance from './balance.model';
+import PaymentMethod from './paymentMethod.model';
 
 @Entity()
 export default class Account extends BaseEntity {
@@ -28,4 +29,15 @@ export default class Account extends BaseEntity {
 
   @OneToMany(() => Balance, balance => balance.account)
   balances!: Balance[];
+
+  @OneToMany(() => PaymentMethod, paymentMethod => paymentMethod.account)
+  paymentMethods!: PaymentMethod[];
+}
+
+export interface CreateAccount {
+  userId: string;
+}
+
+export interface UpdateAccount {
+  userId: string;
 }

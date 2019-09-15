@@ -16,6 +16,7 @@
   "rules": {
     "no-console": "off",
     "class-methods-use-this": "off",
-    "no-explicit-any": "off"
+    "no-explicit-any": "off",
+    "no-throw-literal": "off"
   }
 }

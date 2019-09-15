@@ -1,23 +1,16 @@
 import { createLogger, transports, format } from 'winston';
 
 const logger = createLogger({
-  level: 'info',
   format: format.combine(
     format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss'
     }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
+    format.prettyPrint()
   ),
-  defaultMeta: {},
   transports: [
     new transports.File({
-      filename: 'logs/error.log',
+      filename: 'logs/errors.log',
       level: 'error'
-    }),
-    new transports.File({
-      filename: 'logs/combined.log'
     })
   ],
   exceptionHandlers: [
@@ -30,18 +23,16 @@ const logger = createLogger({
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new transports.Console({
-      format: format.combine(format.simple())
+      format: format.combine(format.prettyPrint())
     })
   );
   logger.exceptions.handle(
     new transports.Console({
-      format: format.combine(format.simple())
+      format: format.combine(format.prettyPrint())
     })
   );
-}
 
-process.on('unhandledRejection', err => {
-  throw err;
-});
+  logger.exitOnError = false;
+}
 
 export default logger;

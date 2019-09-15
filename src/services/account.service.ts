@@ -1,10 +1,10 @@
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
-import Account from '../models/account.model';
-import { CreateAccount } from '../controllers/account.controller';
+import Account, { CreateAccount } from '../models/account.model';
 import Balance from '../models/balance.model';
+import PaymentMethod from '../models/paymentMethod.model';
 
 export default class AccountService {
-  createAccount(newAccount: CreateAccount): Promise<InsertResult> {
+  static createAccount(newAccount: CreateAccount): Promise<InsertResult> {
     return Account.insert(newAccount);
   }
 
@@ -16,13 +16,20 @@ export default class AccountService {
     return Account.findOne(id);
   }
 
-  async getAccountBalances(id: string): Promise<Balance[]> {
+  async getBalances(id: string): Promise<Balance[]> {
     const account = await Account.findOne(id, { relations: ['balances'] });
     return account.balances;
   }
 
-  updateAccount(id: string, info: object): Promise<UpdateResult> {
-    return Account.update(id, info);
+  async getPaymentMethods(id: string): Promise<PaymentMethod[]> {
+    const account = await Account.findOne(id, {
+      relations: ['paymentMethods']
+    });
+    return account.paymentMethods;
+  }
+
+  updateAccount(id: string, data: object): Promise<UpdateResult> {
+    return Account.update(id, data);
   }
 
   deleteAccount(id: string): Promise<DeleteResult> {

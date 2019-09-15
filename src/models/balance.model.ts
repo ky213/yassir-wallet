@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { IsNumber, IsNotEmpty } from 'class-validator';
 import Account from './account.model';
-import Currency from './currency.model';
+import Country from './country.model';
 
 @Entity()
 export default class Balance extends BaseEntity {
@@ -30,18 +30,17 @@ export default class Balance extends BaseEntity {
   @ManyToOne(() => Account, account => account.balances)
   account!: Account;
 
-  @ManyToOne(() => Currency, currency => currency.balances)
-  currency!: Currency;
+  @ManyToOne(() => Country, country => country.balances)
+  country!: Country;
 }
 
 export interface CreateBalance {
-  ammount: number;
-  currency: { id: string };
+  amount: number;
+  country: { id: string };
   account: { id: string };
 }
 
 export interface UpdateBalance {
-  id: string;
   operation: operation;
   amount: number;
 }

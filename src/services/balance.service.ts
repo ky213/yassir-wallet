@@ -1,6 +1,6 @@
 import { DeleteResult, InsertResult } from 'typeorm';
 import Balance, { CreateBalance, UpdateBalance } from '../models/balance.model';
-import Currency from '../models/currency.model';
+import Country from '../models/country.model';
 import Account from '../models/account.model';
 
 export default class BalanceService {
@@ -8,15 +8,15 @@ export default class BalanceService {
     const account = await Account.findOne(newBalance.account.id, {
       relations: ['balances']
     });
-    const currency = await Currency.findOne(newBalance.currency.id, {
+    const country = await Country.findOne(newBalance.country.id, {
       relations: ['balances']
     });
     const balance = await Balance.insert(newBalance);
 
     account.balances.push(balance.raw[0]);
-    currency.balances.push(balance.raw[0]);
+    country.balances.push(balance.raw[0]);
     await Account.save(account);
-    await Currency.save(currency);
+    await Country.save(country);
 
     return Promise.resolve(balance);
   }
@@ -29,8 +29,11 @@ export default class BalanceService {
     return id ? Balance.findOne(id) : Balance.find();
   }
 
-  async updateBalance(newBalance: UpdateBalance): Promise<Balance | string> {
-    const balance = await Balance.findOne(newBalance.id);
+  async updateBalance(
+    id: string,
+    newBalance: UpdateBalance
+  ): Promise<Balance | string> {
+    const balance = await Balance.findOne(id);
     const availableAmount = +balance.ammount;
 
     if (newBalance.operation === 'Increment') {
