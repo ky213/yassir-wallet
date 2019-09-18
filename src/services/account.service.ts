@@ -2,37 +2,22 @@ import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import Account, { CreateAccount } from '../models/account.model';
 import Balance from '../models/balance.model';
 import PaymentMethod from '../models/paymentMethod.model';
+import AccountDTO from '../apiv1/dtos/AccountDTO';
 
-export default class AccountService {
-  static createAccount(newAccount: CreateAccount): Promise<InsertResult> {
-    return Account.insert(newAccount);
-  }
+export const create = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+  const account: Account = new Account();
+  account.userId = AccountDTO.userID;
+  return Account.insert(account);
+};
 
-  getAllAccounts(): Promise<Account[]> {
-    return Account.find();
-  }
+export const update = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+  const account: Account = new Account();
+  account.userId = AccountDTO.userID;
+  return Account.insert(account);
+};
 
-  getAccount(id: string): Promise<Account | undefined> {
-    return Account.findOne(id);
-  }
-
-  async getBalances(id: string): Promise<Balance[]> {
-    const account = await Account.findOne(id, { relations: ['balances'] });
-    return account.balances;
-  }
-
-  async getPaymentMethods(id: string): Promise<PaymentMethod[]> {
-    const account = await Account.findOne(id, {
-      relations: ['paymentMethods']
-    });
-    return account.paymentMethods;
-  }
-
-  updateAccount(id: string, data: object): Promise<UpdateResult> {
-    return Account.update(id, data);
-  }
-
-  deleteAccount(id: string): Promise<DeleteResult> {
-    return Account.delete(id);
-  }
-}
+export const isCreated = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+  const account: Account = new Account();
+  account.userId = AccountDTO.userID;
+  return Account.insert(account);
+};

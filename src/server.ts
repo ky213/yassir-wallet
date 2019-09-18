@@ -1,5 +1,6 @@
 import app from './app';
-import connectDB from './config/databse';
+import connectDB from './config/db/databse';
+import { server as serverConfig } from 'config';
 
 connectDB()
   .then(() => {
@@ -9,6 +10,6 @@ connectDB()
     console.log('Error Connecting To Database', err);
   });
 
-app.listen(process.env.PORT, () => {
-  console.info(`Listening on port ${process.env.PORT}`);
+app.listen(serverConfig.port, () => {
+  console.info(`Listening on port ${serverConfig.port}`);
 });

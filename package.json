@@ -5,18 +5,14 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
-    "concurrently": "^4.1.2",
-    "env-cmd": "^9.0.3",
+    "config": "^3.2.2",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
-    "swagger-ui": "^3.23.5",
-    "swagger-ui-express": "^4.0.7",
-    "tsoa": "^2.4.8",
     "typeorm": "^0.2.18",
-    "typescript": "^3.5.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -27,6 +23,7 @@
     "@types/swagger-ui-express": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^2.1.0",
     "@typescript-eslint/parser": "^2.1.0",
+    "concurrently": "^4.1.2",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-config-prettier": "^6.2.0",
@@ -36,19 +33,20 @@
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
+    "swagger-ui": "^3.23.5",
+    "swagger-ui-express": "^4.0.7",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "tsoa": "^2.4.8",
+    "typescript": "^3.5.3"
   },
   "scripts": {
-    "env:dev": "env-cmd -r src/config/env.dev.json -e dev",
-    "env:prod": "env-cmd -r src/config/env.dev.json -e prod",
-    "dev": "yarn env:dev concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/src/server.js\"",
+    "dev": "nodemon",
     "build": "tsc",
     "start": "yarn build && yarn env:prod node dist/src/server.js",
-    "doc": "tsoa routes && tsoa swagger",
     "lint": "eslint --fix src/**/*.ts ",
     "test": "jest --watch  --detectOpenHandles",
-    "debug": "yarn env:dev node --inspect --require ts-node/register src/server.ts"
+    "debug": "yarn node --inspect --require ts-node/register src/server.ts"
   },
   "repository": {
     "type": "git",

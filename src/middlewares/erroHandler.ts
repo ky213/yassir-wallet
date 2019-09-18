@@ -11,11 +11,11 @@ export interface CustomError {
 }
 
 export default (
-  err: CustomError,
+  err: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
   logger.log('error', '', err);
-  res.status(400).send(err);
+  res.status(400).send(err.message);
 };
