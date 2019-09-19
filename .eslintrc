@@ -17,6 +17,7 @@
     "no-console": "off",
     "class-methods-use-this": "off",
     "no-explicit-any": "off",
-    "no-throw-literal": "off"
+    "no-throw-literal": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

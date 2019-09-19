@@ -1,11 +1,7 @@
 import { createConnection, Connection } from 'typeorm';
-import Account from '../../models/account.model';
-import Balance from '../../models/balance.model';
-import Country from '../../models/country.model';
-import PaymentMethod from '../../models/paymentMethod.model';
-import config from "config"
+import config from 'config';
 
-const dbConfig = config.get("db")
+const dbConfig: any = config.get('db');
 
 const connectDB = (): Promise<Connection> =>
   createConnection({
@@ -15,11 +11,9 @@ const connectDB = (): Promise<Connection> =>
     username: dbConfig.user,
     password: dbConfig.password,
     database: dbConfig.name,
-    entities: [
-      __dirname + '/../../models/*.model{.ts,.js}',
-    ],
+    entities: [`${__dirname}/../../models/*.model{.ts,.js}`],
     synchronize: true,
-    logging: false
+    logging: false,
   });
 
 export default connectDB;

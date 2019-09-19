@@ -1,12 +1,12 @@
 {
-    "db": {
-        "port": "5432",
-        "host": "localhost",
-        "name": "wallet",
-        "user": "postgres",
-        "password": "admin"
-    },
-    "server": {
-        "port": "8080"
-    }
+  "db": {
+    "port": "5432",
+    "host": "localhost",
+    "name": "wallet",
+    "user": "postgres",
+    "password": "postgres"
+  },
+  "server": {
+    "port": "8080"
+  }
 }
