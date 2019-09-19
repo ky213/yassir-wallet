@@ -5,39 +5,31 @@ import {
   UpdateDateColumn,
   OneToMany,
   BaseEntity,
-  Column
+  Column,
 } from 'typeorm';
 import { IsUUID, IsNotEmpty } from 'class-validator';
 import Balance from './balance.model';
-import PaymentMethod from './paymentMethod.model';
+import Card from './card.model';
 
 @Entity()
 export default class Account extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
   @IsUUID()
-  userId!: string;
+  userId: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Balance, balance => balance.account)
-  balances!: Balance[];
+  balances: Balance[];
 
-  @OneToMany(() => PaymentMethod, paymentMethod => paymentMethod.account)
-  paymentMethods!: PaymentMethod[];
-}
-
-export interface CreateAccount {
-  userId: string;
-}
-
-export interface UpdateAccount {
-  userId: string;
+  @OneToMany(() => Card, card => card.account)
+  cards: Card[];
 }

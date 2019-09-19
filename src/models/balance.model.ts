@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  BaseEntity
+  BaseEntity,
 } from 'typeorm';
 import { IsNumber, IsNotEmpty } from 'class-validator';
 import Account from './account.model';
@@ -14,35 +14,22 @@ import Country from './country.model';
 @Entity()
 export default class Balance extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column({ type: 'numeric', nullable: false, default: 0 })
   @IsNotEmpty()
   @IsNumber()
-  ammount!: number;
+  ammount: number;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt: Date;
 
   @ManyToOne(() => Account, account => account.balances)
-  account!: Account;
+  account: Account;
 
   @ManyToOne(() => Country, country => country.balances)
-  country!: Country;
+  country: Country;
 }
-
-export interface CreateBalance {
-  amount: number;
-  country: { id: string };
-  account: { id: string };
-}
-
-export interface UpdateBalance {
-  operation: operation;
-  amount: number;
-}
-
-export type operation = 'Increment' | 'Decrement';
