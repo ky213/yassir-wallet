@@ -1,6 +1,8 @@
-import app from './app';
+import config from 'config';
 import connectDB from './config/db/databse';
-import { server as serverConfig } from 'config';
+import app from './app';
+
+const serverConfig: any = config.get('server');
 
 connectDB()
   .then(() => {
