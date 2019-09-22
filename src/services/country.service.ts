@@ -17,3 +17,12 @@ export const update = (
 ): Promise<UpdateResult> => {
   return Country.update(countryID, countryDTO);
 };
+
+export const remove = async (countryID: string): Promise<Country> => {
+  const country = await Country.findOneOrFail(countryID);
+  return country.remove();
+};
+
+export const findAll = async (): Promise<Country[]> => {
+  return Country.find({});
+};
