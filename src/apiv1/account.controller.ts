@@ -11,6 +11,6 @@ export const createAccount = async (
 };
 
 export const Balances = async (req: Request, res: Response) => {
-  const result = await getBalances(req.params.id);
+  const result = await getBalances(req.params.accountId, req.params.countryId);
   res.send(result);
 };

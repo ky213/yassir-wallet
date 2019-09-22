@@ -6,6 +6,6 @@ import AccountDTO from '../apiv1/dtos/AccountDTO';
 const route = Router();
 
 route.post('/', validationMiddleware(AccountDTO), createAccount);
-route.get('/:id/balances', Balances);
+route.get('/:accountId/:countryId/balances', Balances);
 
 export default route;

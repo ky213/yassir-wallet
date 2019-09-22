@@ -21,10 +21,13 @@ export const create = async (accountDTO: AccountDTO): Promise<void> => {
   });
 };
 
-export const getBalances = async (id: string): Promise<Balance[] | string> => {
-  const account = await Account.findOne(id, {
-    relations: ['balances'],
+export const getBalances = async (
+  accountId: string,
+  countryId: string,
+): Promise<Balance | string> => {
+  const balance = await Balance.findOne({
+    where: { account: accountId, country: countryId },
   });
-  if (account) return Promise.resolve(account.balances);
-  return Promise.resolve('user not found');
+  if (balance) return Promise.resolve(balance);
+  return Promise.resolve('balance not found');
 };
