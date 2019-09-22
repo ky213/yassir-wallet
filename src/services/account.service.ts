@@ -1,24 +1,24 @@
-import { InsertResult } from 'typeorm';
+import { getManager } from 'typeorm';
 import Account from '../models/account.model';
+import Country from '../models/country.model';
 import AccountDTO from '../apiv1/dtos/AccountDTO';
 import Balance from '../models/balance.model';
 
-export const create = (accountDTO: AccountDTO): Promise<InsertResult> => {
-  const account: Account = new Account();
-  account.userId = accountDTO.userID;
-  return Account.insert(account);
-};
+export const create = async (accountDTO: AccountDTO): Promise<void> => {
+  const country = await Country.findOneOrFail({ code: accountDTO.code });
 
-export const update = (accountDTO: AccountDTO): Promise<InsertResult> => {
-  const account: Account = new Account();
-  account.userId = accountDTO.userID;
-  return Account.insert(account);
-};
+  const balance = new Balance();
+  balance.amount = 0;
+  balance.country = country;
 
-export const isCreated = (accountDTO: AccountDTO): Promise<InsertResult> => {
   const account: Account = new Account();
   account.userId = accountDTO.userID;
-  return Account.insert(account);
+  account.balances = [balance];
+
+  return getManager().transaction(async transactionalEntityManager => {
+    await transactionalEntityManager.save(balance);
+    await transactionalEntityManager.save(account);
+  });
 };
 
 export const getBalances = async (id: string): Promise<Balance[] | string> => {

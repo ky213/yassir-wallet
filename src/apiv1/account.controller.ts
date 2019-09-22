@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import { create, getBalances } from '../services/account.service';
 
-export const createAccount = async (req: Request, res: Response) => {
+export const createAccount = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const account = req.body;
-  create(account);
-  res.send('Ok');
+  await create(account);
+  res.status(201).send('Account created succesfully !!');
 };
 
 export const Balances = async (req: Request, res: Response) => {

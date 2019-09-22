@@ -7,57 +7,43 @@ import {
   BaseEntity,
   ManyToMany,
   JoinTable,
-  ManyToOne
+  OneToMany,
 } from 'typeorm';
 import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 import Country from './country.model';
-import Account from './account.model';
+import Card from './card.model';
 
 @Entity()
 export default class PaymentMethod extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
   @IsString()
-  name!: string;
+  name: string;
 
   @Column({ type: 'varchar', nullable: false })
   @IsNotEmpty()
   @IsString()
-  type!: string;
+  type: string;
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   @IsNotEmpty()
   @IsString()
   @MinLength(3)
-  currency!: string;
+  currency: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
-
-  @ManyToOne(() => Account, account => account.paymentMethods)
-  account!: Account;
+  updatedAt: Date;
 
   @ManyToMany(() => Country, country => country.paymentMethods)
-  @JoinTable()
-  countries!: Country[];
-}
+  @JoinTable({ name: 'paymentmethod_country' })
+  countries: Country[];
 
-export interface CreatePaymentMethod {
-  name: string;
-  type: string;
-  currency: string;
-  account: { id: string };
-  country: { id: string };
-}
-
-export interface UpdatePaymentMethod {
-  name?: string;
-  type?: string;
-  currency?: string;
+  @OneToMany(() => Card, card => card.paymentMethod)
+  cards: Card[];
 }
