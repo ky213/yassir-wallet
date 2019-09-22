@@ -6,8 +6,8 @@ export const createCountry = async (
   res: Response,
 ): Promise<void> => {
   const country = req.body;
-  await create(country);
-  res.send('Country created succesfully !!');
+  const createdCountry = await create(country);
+  res.status(201).send(createdCountry);
 };
 export const updateCountry = async (
   req: Request,
@@ -15,8 +15,8 @@ export const updateCountry = async (
 ): Promise<void> => {
   const country = req.body;
   const countryID = req.params.id;
-  await update(countryID, country);
-  res.send('Country updated succesfully !!');
+  const updatedCountry = await update(countryID, country);
+  res.status(201).send(updatedCountry);
 };
 
 export const removeCountry = async (
@@ -24,14 +24,11 @@ export const removeCountry = async (
   res: Response,
 ): Promise<void> => {
   const countryID = req.params.id;
-  await remove(countryID);
-  res.send('Country has beed removed successfully');
+  const removedCountry = await remove(countryID);
+  res.status(201).send(removedCountry);
 };
 
-export const findAllCountries = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
+export const findAllCountries = async (res: Response): Promise<void> => {
   const countries = await findAll();
-  res.send(countries);
+  res.status(201).send(countries);
 };
