@@ -7,5 +7,5 @@ export const createAccount = async (
 ): Promise<void> => {
   const account = req.body;
   await create(account);
-  res.send('Account created succesfully !!');
+  res.status(201).send('Account created succesfully !!');
 };
