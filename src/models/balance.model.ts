@@ -19,7 +19,7 @@ export default class Balance extends BaseEntity {
   @Column({ type: 'numeric', nullable: false, default: 0 })
   @IsNotEmpty()
   @IsNumber()
-  ammount: number;
+  amount: number;
 
   @CreateDateColumn()
   createdAt: Date;
