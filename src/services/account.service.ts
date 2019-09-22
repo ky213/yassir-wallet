@@ -1,23 +1,30 @@
-import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
-import Account, { CreateAccount } from '../models/account.model';
-import Balance from '../models/balance.model';
-import PaymentMethod from '../models/paymentMethod.model';
+import { InsertResult } from 'typeorm';
+import Account from '../models/account.model';
 import AccountDTO from '../apiv1/dtos/AccountDTO';
+import Balance from '../models/balance.model';
 
-export const create = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+export const create = (accountDTO: AccountDTO): Promise<InsertResult> => {
   const account: Account = new Account();
-  account.userId = AccountDTO.userID;
+  account.userId = accountDTO.userID;
   return Account.insert(account);
 };
 
-export const update = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+export const update = (accountDTO: AccountDTO): Promise<InsertResult> => {
   const account: Account = new Account();
-  account.userId = AccountDTO.userID;
+  account.userId = accountDTO.userID;
   return Account.insert(account);
 };
 
-export const isCreated = (AccountDTO: AccountDTO): Promise<InsertResult> => {
+export const isCreated = (accountDTO: AccountDTO): Promise<InsertResult> => {
   const account: Account = new Account();
-  account.userId = AccountDTO.userID;
+  account.userId = accountDTO.userID;
   return Account.insert(account);
+};
+
+export const getBalances = async (id: string): Promise<Balance[] | string> => {
+  const account = await Account.findOne(id, {
+    relations: ['balances'],
+  });
+  if (account) return Promise.resolve(account.balances);
+  return Promise.resolve('user not found');
 };
