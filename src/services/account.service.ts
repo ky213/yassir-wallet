@@ -21,7 +21,7 @@ export const create = async (accountDTO: AccountDTO): Promise<void> => {
   });
 };
 
-export const getBalances = async (
+export const getCountryBalance = async (
   accountId: string,
   countryId: string,
 ): Promise<Balance | string> => {

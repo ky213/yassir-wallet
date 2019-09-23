@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { create, getBalances } from '../services/account.service';
+import { create, getCountryBalance } from '../services/account.service';
 
 export const createAccount = async (
   req: Request,
@@ -10,7 +10,10 @@ export const createAccount = async (
   res.status(201).send('Account created succesfully !!');
 };
 
-export const Balances = async (req: Request, res: Response) => {
-  const result = await getBalances(req.params.accountId, req.params.countryId);
+export const Balance = async (req: Request, res: Response) => {
+  const result = await getCountryBalance(
+    req.params.accountId,
+    req.params.countryId,
+  );
   res.send(result);
 };
